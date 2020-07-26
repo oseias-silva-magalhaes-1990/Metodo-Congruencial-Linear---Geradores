@@ -112,7 +112,7 @@ class GeradorSAS(QtWidgets.QWidget):
         arquivo = open("Gerador SAS\CRIALEO.txt", "w")
         arquivo.write("\n\n***************************************************\n")
         arquivo.write("***************************************************\n")
-        arquivo.write("GERADOR SAS")
+        arquivo.write("GERADOR SAS\n")
         arquivo.write("Semente: " + self.campoSemente.text()+"\n")
         arquivo.write("Multiplicador: " + self.campoMultiplicador.text()+"\n")
         arquivo.write("Tamanho: " + self.campoTamanho.text()+"\n")
@@ -124,10 +124,10 @@ class GeradorSAS(QtWidgets.QWidget):
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
                 resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
-                arquivo.write(str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
+                arquivo.write("0."+str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
             else:
                 resultado.append(((a * resultado[i - 1]) % m))#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
-                arquivo.write(str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
+                arquivo.write("0."+str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
 
         arquivo.close()
 
@@ -175,7 +175,7 @@ class GeradorDEC(QtWidgets.QWidget):
         self.campoMultiplicador = QtWidgets.QLineEdit(Form)
         self.campoMultiplicador.setGeometry(QtCore.QRect(70, 60, 71, 20))
         self.campoMultiplicador.setObjectName("campoMultiplicador")
-        self.campoMultiplicador.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[1-9][0-9]{4}"), self.campoMultiplicador))
+        self.campoMultiplicador.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[1-9][0-9]{8}"), self.campoMultiplicador))
 
         self.label_multiplicador = QtWidgets.QLabel(Form)
         self.label_multiplicador.setGeometry(QtCore.QRect(50, 60, 16, 16))
@@ -269,7 +269,7 @@ class GeradorDEC(QtWidgets.QWidget):
         arquivo = open("Gerador DEC\CRIALEO.txt", "w")
         arquivo.write("\n\n***************************************************\n")
         arquivo.write("***************************************************\n")
-        arquivo.write("GERADOR DEC")
+        arquivo.write("GERADOR DEC\n")
         arquivo.write("Semente: " + self.campoSemente.text()+"\n")
         arquivo.write("Multiplicador: " + self.campoMultiplicador.text()+"\n")
         arquivo.write("Tamanho: " + self.campoTamanho.text()+"\n")
@@ -282,10 +282,10 @@ class GeradorDEC(QtWidgets.QWidget):
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
                 resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
-                arquivo.write(str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
+                arquivo.write("0."+str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
             else:
                 resultado.append(((a * resultado[i - 1] + c) % m))#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
-                arquivo.write(str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
+                arquivo.write("0."+str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
 
         arquivo.close()
 
@@ -325,7 +325,7 @@ class Gerador1(QtWidgets.QWidget):
         self.campoMultiplicador = QtWidgets.QLineEdit(Form)
         self.campoMultiplicador.setGeometry(QtCore.QRect(70, 60, 71, 20))
         self.campoMultiplicador.setObjectName("campoMultiplicador")
-        self.campoMultiplicador.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[1-9][0-9]{4}"), self.campoMultiplicador))
+        self.campoMultiplicador.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[1-9][0-9]{8}"), self.campoMultiplicador))
 
         self.label_7 = QtWidgets.QLabel(Form)
         self.label_7.setGeometry(QtCore.QRect(50, 60, 16, 16))
@@ -394,13 +394,14 @@ class Gerador1(QtWidgets.QWidget):
         n = int(self.campoTamanho.text())#quantidade de valores a serem gerados
         p = int(self.campoPrimo.text())#numero primo
         m = (pow(2,p))-1 #numero de mersene
+
         resultado = [] #vetor para o geração dos valores
 
         # Cabecalho do Arquivo Texto
         arquivo = open("Gerador 1\CRIALEO.txt", "w")
         arquivo.write("\n\n***************************************************\n")
         arquivo.write("***************************************************\n")
-        arquivo.write("GERADOR 1")
+        arquivo.write("GERADOR 1\n")
         arquivo.write("Semente: " + self.campoSemente.text()+"\n")
         arquivo.write("Multiplicador: " + self.campoMultiplicador.text()+"\n")
         arquivo.write("Tamanho: " + self.campoTamanho.text()+"\n")
@@ -412,10 +413,11 @@ class Gerador1(QtWidgets.QWidget):
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
                 resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
-                arquivo.write(str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
+                arquivo.write("0."+str(resultado[i])+"\n")#Escreve no arquivo .txt o valor armazenado no vetor
             else:
-                resultado.append(((a * resultado[i - 1]) % m))#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
-                arquivo.write(str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
+                resultado.append((a * resultado[i - 1]) % m)#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
+                arquivo.write("0."+str(resultado[i])+"\n")#escreve o ultimo valor atribuido ao vetor no arquivo .txt
+
 
         arquivo.close()
 
