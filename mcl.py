@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
+import math
 
 class Ui_MCL(object):
     def setupUi(self, MCL):
@@ -553,10 +554,23 @@ class Ui_MCL(object):
 
         for i in range(n):
             arquivo.write(str(resultado[i]/m) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
-
-
-
         arquivo.close()
+
+        self.testeDeUniformidade(resultado)
+
+    def testeDeUniformidade(self, valores):
+        freq = []#frquencias
+        tam = len(valores)
+
+        for i in range(10):
+            qtd=0
+            for j in range(tam):
+                a = (str(valores[j]))[0]
+                if i == int(a):
+                    qtd = qtd +1
+            freq.append(qtd)
+        print(freq)
+        print(valores)
 
     def testeDasFilas(self, valores):
         print("Fazer")
@@ -565,6 +579,16 @@ class Ui_MCL(object):
         print("Fazer")
         #se T não for multiplo de n fazer n-1
 
+    def menorValor(self, valores):
+        n = len(valores)
+        menor = 0
+
+        for i in range(n):
+            if i==0:
+                menor = valores[i]
+            if valores[i] < menor:
+                    menor = valores[i]
+        return menor
 
 if __name__ == "__main__":
     import sys
