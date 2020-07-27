@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import time
 
 class Ui_MCL(object):
     def setupUi(self, MCL):
@@ -402,12 +403,17 @@ class Ui_MCL(object):
         m = (pow(2, p)-1)  # modulo
         resultado = []  # vetor para o geração dos valores
 
+        inicioTR = time.time()
         # execução
         for i in range(n):  # O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:  # inicializa o arquivo .txt
-                resultado.append(n0)  # Se estiver vazio atribui a primeira posição a semente
+                resultado.append((a * n0 + c) % m)  # Se estiver vazio atribui a primeira posição
             else:
                 resultado.append((a * resultado[i - 1] + c) % m)  # Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL
+        fimTR = time.time()
+        self.label_erroTR.setText("Tempo: {0:.4f}".format(fimTR-inicioTR))
+        self.label_erroTR.setStyleSheet('QLabel {color: black}')
+        self.label_erroTR.setVisible(True)
 
         # Gravação do arquivo CRIALEO.txt Gerador Trabalho
         arquivo = open("Gerador TR\CRIALEO.txt", "w")
@@ -420,6 +426,7 @@ class Ui_MCL(object):
         arquivo.write("Constante: " + self.campoConstTR.text() + "\n")
         arquivo.write("Primo: " + self.campoPriTR.text() + "\n")
         arquivo.write("Mercene: " + str(m) + "\n")
+        arquivo.write("Tempo de execucao: {0:.4f}".format(fimTR - inicioTR) + "\n")
         arquivo.write("***************************************************\n")
         arquivo.write("***************************************************\n\n")
 
@@ -437,13 +444,17 @@ class Ui_MCL(object):
         m = (pow(2,p))-1 #numero de mersene
         resultado = [] #vetor para o geração dos valores
 
+        inicioG1 = time.time()
         #execução
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
-                resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
+                resultado.append((a * n0) % m)#Se estiver vazio atribui a primeira posição a semente
             else:
                 resultado.append((a * resultado[i - 1]) % m)#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
-
+        fimG1 = time.time()
+        self.label_erroG1.setText("Tempo: {0:.4f}".format(fimG1-inicioG1))
+        self.label_erroG1.setStyleSheet('QLabel {color: black}')
+        self.label_erroG1.setVisible(True)
 
         #Gravação do arquivo CRIALEO.txt GERADOR 1
         arquivo = open("Gerador 1\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
@@ -455,6 +466,7 @@ class Ui_MCL(object):
         arquivo.write("Tamanho: " + self.campoTamG1.text()+"\n")
         arquivo.write("Primo: " + self.campoPrimoG1.text()+"\n")
         arquivo.write("Mercene: " + str(m)+"\n")
+        arquivo.write("Tempo de execucao: {0:.4f}".format(fimG1 - inicioG1) + "\n")
         arquivo.write("***************************************************\n")
         arquivo.write("***************************************************\n\n")
 
@@ -472,12 +484,17 @@ class Ui_MCL(object):
         m = (pow(2,x))#modulo
         resultado = []#vetor para o geração dos valores
 
+        inicioDEC = time.time()
         #execução
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
-                resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
+                resultado.append((a * n0 + c) % m)#Se estiver vazio atribui a primeira posição a semente
             else:
                 resultado.append(((a * resultado[i - 1] + c) % m))#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
+        fimDEC = time.time()
+        self.label_erroDEC.setText("Tempo: {0:.4f}".format(fimDEC-inicioDEC))
+        self.label_erroDEC.setStyleSheet('QLabel {color: black}')
+        self.label_erroDEC.setVisible(True)
 
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador DEC\CRIALEO.txt", "w")
@@ -490,6 +507,7 @@ class Ui_MCL(object):
         arquivo.write("Constante: " + self.campoConstDEC.text() + "\n")
         arquivo.write("Potência: " + self.campoPotDEC.text() + "\n")
         arquivo.write("Módulo: " + str(m) + "\n")
+        arquivo.write("Tempo de execucaoo: {0:.4f}".format(fimDEC - inicioDEC) + "\n")
         arquivo.write("***************************************************\n")
         arquivo.write("***************************************************\n\n")
 
@@ -508,12 +526,17 @@ class Ui_MCL(object):
         m = (pow(2,p))-1 #numero de mersene
         resultado = [] #vetor para o geração dos valores
 
+        inicioSAS = time.time()
         #gerador
         for i in range(n):#O looping funcinará até que seja satisfeita a quantidade n informada
             if i == 0:#inicializa o arquivo .txt
-                resultado.append(n0)#Se estiver vazio atribui a primeira posição a semente
+                resultado.append((a * n0) % m)#Se estiver vazio atribui a primeira posição a semente
             else:
-                resultado.append(((a * resultado[i - 1]) % m))#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
+                resultado.append((a * resultado[i - 1]) % m)#Caso o vetor já possua o valor da semente n0 realiza-se o cálculo da MCL Multiplicativa
+        fimSAS = time.time()
+        self.label_erroSAS.setText("Tempo: {0:.4f}".format(fimSAS-inicioSAS))
+        self.label_erroSAS.setStyleSheet('QLabel {color: black}')
+        self.label_erroSAS.setVisible(True)
 
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador SAS\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
@@ -525,6 +548,7 @@ class Ui_MCL(object):
         arquivo.write("Tamanho: " + self.campoTamSAS.text()+"\n")
         arquivo.write("Primo: " + self.campoPrimoSAS.text()+"\n")
         arquivo.write("Mercene: " + str(m)+"\n")
+        arquivo.write("Tempo de execucao: {0:.4f}".format(fimSAS-inicioSAS)+"\n")
         arquivo.write("***************************************************\n")
         arquivo.write("***************************************************\n\n")
 
