@@ -431,7 +431,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor
+            arquivo.write(str(resultado[i]/m) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
 
         arquivo.close()
 
@@ -471,7 +471,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor
+            arquivo.write(str(resultado[i]/m) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
     def executaGeradorDEC(self):
@@ -512,8 +512,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor
-
+            arquivo.write(str(resultado[i]/m) + "\n") #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
     def executaGeradorSAS(self):
@@ -553,11 +552,19 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor
+            arquivo.write(str(resultado[i]/m) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
 
 
 
         arquivo.close()
+
+    def testeDasFilas(self, valores):
+        print("Fazer")
+
+    def testeDasPermutacoes(self, valores):
+        print("Fazer")
+        #se T não for multiplo de n fazer n-1
+
 
 if __name__ == "__main__":
     import sys
