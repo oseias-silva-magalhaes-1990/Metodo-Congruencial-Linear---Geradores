@@ -416,6 +416,9 @@ class Ui_MCL(object):
         self.label_erroTR.setStyleSheet('QLabel {color: black}')
         self.label_erroTR.setVisible(True)
 
+        for i in range(n):
+            resultado[i] = resultado[i]/m
+
         # Gravação do arquivo CRIALEO.txt Gerador Trabalho
         arquivo = open("Gerador TR\CRIALEO.txt", "w")
         arquivo.write("***************************************************\n")  # Cabecalho do Arquivo Texto
@@ -432,7 +435,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]/m) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
+            arquivo.write(str(resultado[i]) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
 
         arquivo.close()
 
@@ -457,6 +460,9 @@ class Ui_MCL(object):
         self.label_erroG1.setStyleSheet('QLabel {color: black}')
         self.label_erroG1.setVisible(True)
 
+        for i in range(n):
+            resultado[i] = resultado[i]/m
+
         #Gravação do arquivo CRIALEO.txt GERADOR 1
         arquivo = open("Gerador 1\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
         arquivo.write("***************************************************\n")
@@ -472,7 +478,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]/m) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
+            arquivo.write(str(resultado[i]) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
     def executaGeradorDEC(self):
@@ -497,6 +503,9 @@ class Ui_MCL(object):
         self.label_erroDEC.setStyleSheet('QLabel {color: black}')
         self.label_erroDEC.setVisible(True)
 
+        for i in range(n):
+            resultado[i] = resultado[i]/m
+
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador DEC\CRIALEO.txt", "w")
         arquivo.write("***************************************************\n")# Cabecalho do Arquivo Texto
@@ -513,7 +522,7 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]/m) + "\n") #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
+            arquivo.write(str(resultado[i]) + "\n") #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
     def executaGeradorSAS(self):
@@ -538,6 +547,9 @@ class Ui_MCL(object):
         self.label_erroSAS.setStyleSheet('QLabel {color: black}')
         self.label_erroSAS.setVisible(True)
 
+        for i in range(n):
+            resultado[i] = resultado[i]/m
+
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador SAS\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
         arquivo.write("***************************************************\n")
@@ -553,23 +565,52 @@ class Ui_MCL(object):
         arquivo.write("***************************************************\n\n")
 
         for i in range(n):
-            arquivo.write(str(resultado[i]/m) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
+            arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
         self.testeDeUniformidade(resultado)
 
     def testeDeUniformidade(self, valores):
-        freq = []#frquencias
+        fo = []#frquencias observadas
+        fe = 10 #frequencia esperada
+        x = [] # x = (fo-fe)^2/fe
+        pi = [] #frequência relativa
+        gx = []
+        fx = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        y = []#fx - gx
+
         tam = len(valores)
 
         for i in range(10):
             qtd=0
             for j in range(tam):
-                a = (str(valores[j]))[0]
+                a = (str(valores[j]))[2]
                 if i == int(a):
                     qtd = qtd +1
-            freq.append(qtd)
-        print(freq)
+            fo.append(qtd)
+            x.append((math.pow((fo[i] - fe), 2))/fe)
+            pi.append(fo[i]/tam)
+            if i == 0:
+                gx.append(fo[i])
+            else:
+                gx.append(fo[i]+gx[i-1])
+            y.append(math.fabs(fx[i] - gx[i]))
+
+        print(x)
+
+        ksCalc = self.maiorValor(y)
+        ks5 = 1.36/math.sqrt(tam)
+
+        print(ksCalc)
+        print(ks5)
+
+        if ksCalc < ks5:
+            print("Aceita Ho")
+        else:
+            print("Rejeita Ho")
+
+
+        print(fo)
         print(valores)
 
     def testeDasFilas(self, valores):
@@ -579,16 +620,16 @@ class Ui_MCL(object):
         print("Fazer")
         #se T não for multiplo de n fazer n-1
 
-    def menorValor(self, valores):
+    def maiorValor(self, valores):
         n = len(valores)
-        menor = 0
+        maior = 0
 
         for i in range(n):
             if i==0:
-                menor = valores[i]
-            if valores[i] < menor:
-                    menor = valores[i]
-        return menor
+                maior = valores[i]
+            if valores[i] > maior:
+                    maior = valores[i]
+        return maior
 
 if __name__ == "__main__":
     import sys
