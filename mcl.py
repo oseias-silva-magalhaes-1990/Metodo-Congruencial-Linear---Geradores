@@ -418,6 +418,7 @@ class Ui_MCL(object):
 
         for i in range(n):
             resultado[i] = resultado[i]/m
+            print(resultado[i])
 
         # Gravação do arquivo CRIALEO.txt Gerador Trabalho
         arquivo = open("Gerador TR\CRIALEO.txt", "w")
@@ -436,8 +437,22 @@ class Ui_MCL(object):
 
         for i in range(n):
             arquivo.write(str(resultado[i]) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
-
         arquivo.close()
+
+        print("\n***************************************************")  # Cabecalho do Arquivo Texto
+        print("***************************************************")
+        print("GERADOR TR")
+        print("Semente: " + self.campoSemTR.text())
+        print("Multiplicador: " + self.campoMultTR.text())
+        print("Tamanho: " + self.campoTamTR.text())
+        print("Constante: " + self.campoConstTR.text())
+        print("Primo: " + self.campoPriTR.text())
+        print("Mercene: " + str(m))
+        print("Tempo de execucao: {0:.4f}".format(fimTR - inicioTR))
+        print("***************************************************")
+        print("***************************************************")
+
+        self.testeDeUniformidade(resultado, "TR")
 
     def executaGerador1(self):
         self.label_erroG1.clear()
@@ -462,6 +477,7 @@ class Ui_MCL(object):
 
         for i in range(n):
             resultado[i] = resultado[i]/m
+            print(resultado[i])
 
         #Gravação do arquivo CRIALEO.txt GERADOR 1
         arquivo = open("Gerador 1\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
@@ -480,6 +496,20 @@ class Ui_MCL(object):
         for i in range(n):
             arquivo.write(str(resultado[i]) + "\n")  #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
+
+        print("\n***************************************************")
+        print("***************************************************")
+        print("GERADOR 1")
+        print("Semente: " + self.campoSemG1.text())
+        print("Multiplicador: " + self.campoMultG1.text())
+        print("Tamanho: " + self.campoTamG1.text())
+        print("Primo: " + self.campoPrimoG1.text())
+        print("Mercene: " + str(m))
+        print("Tempo de execucao: {0:.4f}".format(fimG1 - inicioG1))
+        print("***************************************************")
+        print("***************************************************")
+
+        self.testeDeUniformidade(resultado, "G1")
 
     def executaGeradorDEC(self):
         self.label_erroDEC.clear()
@@ -505,6 +535,7 @@ class Ui_MCL(object):
 
         for i in range(n):
             resultado[i] = resultado[i]/m
+            print(resultado[i])
 
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador DEC\CRIALEO.txt", "w")
@@ -524,6 +555,21 @@ class Ui_MCL(object):
         for i in range(n):
             arquivo.write(str(resultado[i]) + "\n") #Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
+
+        print("\n***************************************************")  # Cabecalho do Arquivo Texto
+        print("***************************************************")
+        print("GERADOR DEC")
+        print("Semente: " + self.campoSemDEC.text())
+        print("Multiplicador: " + self.campoMultDEC.text())
+        print("Tamanho: " + self.campoTamDEC.text())
+        print("Constante: " + self.campoConstDEC.text())
+        print("Potência: " + self.campoPotDEC.text())
+        print("Módulo: " + str(m))
+        print("Tempo de execucaoo: {0:.4f}".format(fimDEC - inicioDEC))
+        print("***************************************************")
+        print("***************************************************")
+
+        self.testeDeUniformidade(resultado, "DEC")
 
     def executaGeradorSAS(self):
         self.label_erroSAS.clear()
@@ -549,6 +595,7 @@ class Ui_MCL(object):
 
         for i in range(n):
             resultado[i] = resultado[i]/m
+            print(resultado[i])
 
         #Gravação do arquivo CRIALEO.txt
         arquivo = open("Gerador SAS\CRIALEO.txt", "w")# Cabecalho do Arquivo Texto
@@ -568,9 +615,21 @@ class Ui_MCL(object):
             arquivo.write(str(resultado[i]) + "\n")  # Escreve no arquivo .txt o valor armazenado no vetor em formato decimal
         arquivo.close()
 
-        self.testeDeUniformidade(resultado)
+        print("\n***************************************************")
+        print("***************************************************")
+        print("GERADOR SAS")
+        print("Semente: " + self.campoSemSAS.text())
+        print("Multiplicador: " + self.campoMultSAS.text())
+        print("Tamanho: " + self.campoTamSAS.text())
+        print("Primo: " + self.campoPrimoSAS.text())
+        print("Mercene: " + str(m))
+        print("Tempo de execucao: {0:.4f}".format(fimSAS - inicioSAS))
+        print("***************************************************")
+        print("***************************************************")
 
-    def testeDeUniformidade(self, valores):
+        self.testeDeUniformidade(resultado, "SAS")
+
+    def testeDeUniformidade(self, valores, tipoGer):
         fo = []#frquencias observadas
         fe = 10 #frequencia esperada
         x = [] # x = (fo-fe)^2/fe
@@ -578,9 +637,9 @@ class Ui_MCL(object):
         gx = []
         fx = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
         y = []#fx - gx
+        arquivo = ""
 
         tam = len(valores)
-
         for i in range(10):
             qtd=0
             for j in range(tam):
@@ -591,27 +650,58 @@ class Ui_MCL(object):
             x.append((math.pow((fo[i] - fe), 2))/fe)
             pi.append(fo[i]/tam)
             if i == 0:
-                gx.append(fo[i])
+                gx.append(pi[i])
             else:
-                gx.append(fo[i]+gx[i-1])
+                gx.append(pi[i]+gx[i-1])
             y.append(math.fabs(fx[i] - gx[i]))
-
-        print(x)
 
         ksCalc = self.maiorValor(y)
         ks5 = 1.36/math.sqrt(tam)
 
-        print(ksCalc)
-        print(ks5)
-
         if ksCalc < ks5:
-            print("Aceita Ho")
+            testeKs = "Aceita Ho"
         else:
-            print("Rejeita Ho")
+            testeKs = "Rejeita Ho"
 
+        if tipoGer == "TR":
+            arquivo = open("Gerador TR\Teste Uniformidade.txt", "w")  # Cabecalho do Arquivo Texto
+        if tipoGer == "G1":
+            arquivo = open("Gerador 1\Teste Uniformidade.txt", "w")  # Cabecalho do Arquivo Texto
+        if tipoGer == "DEC":
+            arquivo = open("Gerador DEC\Teste Uniformidade.txt", "w")  # Cabecalho do Arquivo Texto
+        if tipoGer == "SAS":
+            arquivo = open("Gerador SAS\Teste Uniformidade.txt", "w")  # Cabecalho do Arquivo Texto
 
-        print(fo)
-        print(valores)
+        arquivo.write("***************************************************\n")
+        arquivo.write("Teste de uniformidade com Kolmogorov-Sminorv a 5%\n")
+        arquivo.write("Fo: "+str(fo)+"\n")
+        arquivo.write("N: " + str(math.fsum(fo)) + "\n")
+        arquivo.write("Fe: " + str(fe)+"\n")
+        arquivo.write("(Fe-Fo)^2/Fe: " + str(x)+"\n")
+        arquivo.write("p'i: " + str(pi)+"\n")
+        arquivo.write("G(x): " + str(gx)+"\n")
+        arquivo.write("F(x): " + str(fx)+"\n")
+        arquivo.write("|F(x)-G(x)|: " + str(y)+"\n")
+        arquivo.write("K-S calc%: " + str(ksCalc) + "\n")
+        arquivo.write("K-S 5%: " + str(ks5) + "\n")
+        arquivo.write("Teste de hipótese: " + testeKs+"\n")
+        arquivo.write("***************************************************\n")
+        arquivo.close()
+
+        print("***************************************************")
+        print("Teste de uniformidade com Kolmogorov-Sminorv a 5%")
+        print("Fo: " + str(fo))
+        print("N: " + str(math.fsum(fo)))
+        print("Fe: " + str(fe))
+        print("(Fe-Fo)^2/Fe: " + str(x))
+        print("p'i: " + str(pi))
+        print("G(x): " + str(gx))
+        print("F(x): " + str(fx))
+        print("|F(x)-G(x)|: " + str(y))
+        print("K-S calc%: " + str(ksCalc))
+        print("K-S 5%: " + str(ks5))
+        print("Teste de hipótese: " + testeKs)
+        print("***************************************************")
 
     def testeDasFilas(self, valores):
         print("Fazer")
